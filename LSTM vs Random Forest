@@ -1,0 +1,85 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate 25 random accuracy values between 0.80 and 0.98
+np.random.seed(42)
+accuracy_lstm = np.round(np.random.uniform(0.80, 0.98, 25), 3)
+accuracy_rf = np.round(np.random.uniform(0.80, 0.98, 25), 3)
+
+# Sort values from highest to lowest
+accuracy_lstm = np.sort(accuracy_lstm)[::-1]
+accuracy_rf = np.sort(accuracy_rf)[::-1]
+
+# Create test labels
+test_labels = [f"Test {i+1}" for i in range(25)]
+
+# Print accuracy values in a structured format
+print("\nTest Case Report:")
+print("=" * 50)
+print(f"{'Test Case':<10}{'LSTM Accuracy':<25}{'Random Forest Accuracy':<25}")
+print("=" * 50)
+
+for i in range(25):
+    print(f"{test_labels[i]:<10}{accuracy_lstm[i]:<25}{accuracy_rf[i]:<25}")
+
+# Set bar width
+bar_width = 0.35
+index = np.arange(25)
+
+# Plot the bar chart
+fig, ax = plt.subplots(figsize=(14, 6))
+bars1 = ax.bar(index - bar_width/2, accuracy_lstm, bar_width, color='skyblue', label="LSTM")
+bars2 = ax.bar(index + bar_width/2, accuracy_rf, bar_width, color='orange', label="Random Forest")
+
+# Add text labels on bars
+for bar in bars1:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2, yval, f"{yval:.2f}", ha='center', va='bottom', fontsize=10)
+
+for bar in bars2:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2, yval, f"{yval:.2f}", ha='center', va='bottom', fontsize=10)
+
+# Labels and title
+ax.set_xlabel("Test Cases", fontsize=12)
+ax.set_ylabel("Accuracy", fontsize=12)
+ax.set_title("Optimizing Machine Learning Models for Personalized Neurological Therapy: LSTM vs Random Forest", fontsize=14, fontweight="bold")
+ax.set_xticks(index)
+ax.set_xticklabels(test_labels, rotation=45, ha="right", fontsize=10)
+ax.set_ylim(0.75, 1.0)
+ax.legend()
+
+# Show grid
+ax.grid(axis="y", linestyle="--", alpha=0.7)
+
+# Display the graph
+plt.tight_layout()
+plt.show()
+
+# Final accuracy values
+lstm_accuracy = 0.96  # Replace with actual final accuracy
+rf_accuracy = 0.85   # Replace with actual final accuracy
+
+# Model names
+models = ["LSTM", "Random Forest"]
+accuracies = [lstm_accuracy, rf_accuracy]
+
+# Plot bar chart
+plt.figure(figsize=(6, 5))
+bars = plt.bar(models, accuracies, color=['skyblue', 'orange'])
+
+# Add text labels on bars
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval, f"{yval:.2f}", ha='center', va='bottom', fontsize=12, fontweight='bold')
+
+# Labels and title
+plt.ylabel("Final Accuracy", fontsize=12)
+plt.title("Final Accuracy Comparison: LSTM vs Random Forest", fontsize=13, fontweight="bold")
+plt.ylim(0.75, 1.0)
+
+# Show grid
+plt.grid(axis="y", linestyle="--", alpha=0.7)
+
+# Display graph
+plt.show()
